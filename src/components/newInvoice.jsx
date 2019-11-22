@@ -18,7 +18,7 @@ const ITEMS = [
   "SS பாத்திரங்கள்"
 ];
 
-const itemsState = {
+const checkboxState = {
   "புதிய அலுமினிய பாத்திரங்கள்": false,
   "பழைய வேஸ்ட் அலுமினிய பாத்திரங்கள்": false,
   "பழைய வேஸ்ட் அலுமினிய பாத்திரங்கள் மெட்டல்": false,
@@ -34,14 +34,46 @@ const itemsState = {
   "பிளாஸ்டிக் ஸ்டூல்": false,
   "SS பாத்திரங்கள்": false
 };
+const textInputState = {
+  "புதிய அலுமினிய பாத்திரங்கள்": "",
+  "பழைய வேஸ்ட் அலுமினிய பாத்திரங்கள்": "",
+  "பழைய வேஸ்ட் அலுமினிய பாத்திரங்கள் மெட்டல்": "",
+  "பழைய வேஸ்ட் பித்தளை பொருட்கள்": "",
+  "பழைய வேஸ்ட் செம்பு பொருட்கள்": "",
+  "பழைய வேஸ்ட் பிளாஸ்டிக் பொருட்கள்": "",
+  "பழைய வேஸ்ட் இரும்பு பொருட்கள்": "",
+  "அலுமினியம் தகடு (உருமாற்றம் செய்ய)": "",
+  வடிதட்டம்: "",
+  "பிளாஸ்டிக் குடம்": "",
+  "பிளாஸ்டிக் டப்பு": "",
+  "பிளாஸ்டிக் வாட்டர் கேன்": "",
+  "பிளாஸ்டிக் ஸ்டூல்": "",
+  "SS பாத்திரங்கள்": ""
+};
 
 class NewInvoice extends Component {
   constructor() {
     super();
     this.state = {
-      checkboxes: itemsState
+      checkboxes: checkboxState,
+      textInputs: {
+        billNumber: "",
+        billDate: "",
+        vehicleNumber: "",
+        weight: { ...textInputState },
+        rate: { ...textInputState },
+        partyAddress: "",
+        partyGSTIN: "",
+        cgst: "",
+        sgst: ""
+      }
     };
   }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    console.log("Component Updated");
+    console.log(this.state.textInputs);
+  };
 
   handleCheckboxChange = event => {
     const { name } = event.target;
@@ -52,6 +84,29 @@ class NewInvoice extends Component {
         [name]: !prevState.checkboxes[name]
       }
     }));
+  };
+
+  handleTextInputChange = (event, label) => {
+    const { name, value } = event.target;
+    console.log(name, ": ", value);
+
+    if (name === "weight" || name === "rate") {
+      this.setState(prevState => ({
+        textInputs: {
+          ...prevState.textInputs,
+          [name]: {
+            [label]: value
+          }
+        }
+      }));
+    } else {
+      this.setState(prevState => ({
+        textInputs: {
+          ...prevState.textInputs,
+          [name]: value
+        }
+      }));
+    }
   };
 
   mySubmitHandler = event => {
@@ -66,7 +121,10 @@ class NewInvoice extends Component {
           key={item}
           label={item}
           isSelected={this.state.checkboxes[item]}
-          handleChange={this.handleCheckboxChange}
+          weight={this.state.textInputs.weight[item]}
+          rate={this.state.textInputs.rate[item]}
+          handleCheckboxChange={this.handleCheckboxChange}
+          handleTextChange={this.handleTextInputChange}
         />
       );
     });
@@ -87,6 +145,10 @@ class NewInvoice extends Component {
                   <input
                     type="number"
                     className="form-control ml-md-4"
+                    value={this.state.textInputs.billNumber}
+                    onChange={event =>
+                      this.handleTextInputChange(event, "billNumber")
+                    }
                     name="billNumber"
                     placeholder="Enter Bill Number"
                   />
@@ -98,6 +160,10 @@ class NewInvoice extends Component {
                   <input
                     type="date"
                     className="form-control ml-md-4"
+                    value={this.state.textInputs.billDate}
+                    onChange={event =>
+                      this.handleTextInputChange(event, "billDate")
+                    }
                     name="billDate"
                     placeholder="Enter Bill Date"
                   />
@@ -109,6 +175,10 @@ class NewInvoice extends Component {
                   <input
                     type="text"
                     className="form-control ml-md-4"
+                    value={this.state.textInputs.vehicleNumber}
+                    onChange={event =>
+                      this.handleTextInputChange(event, "vehicleNumber")
+                    }
                     name="vehicleNumber"
                     placeholder="Enter Vehicle Number"
                   />
@@ -122,6 +192,10 @@ class NewInvoice extends Component {
                   <input
                     type="text"
                     className="form-control ml-md-4"
+                    value={this.state.textInputs.partyAddress}
+                    onChange={event =>
+                      this.handleTextInputChange(event, "partyAddress")
+                    }
                     name="partyAddress"
                     placeholder="Enter Party Address"
                   />
@@ -133,38 +207,26 @@ class NewInvoice extends Component {
                   <input
                     type="text"
                     className="form-control ml-md-4"
+                    value={this.state.textInputs.partyGSTIN}
+                    onChange={event =>
+                      this.handleTextInputChange(event, "partyGSTIN")
+                    }
                     name="partyGSTIN"
                     placeholder="Enter Party GSTIN"
                   />
                 </div>
               </div>
               <div>{this.createCheckboxes()}</div>
-              {/* <div className="d-flex flex-row justify-content-around align-items-center m-md-3">
-                <div className="d-flex flex-row">
-                  <label className="text-nowrap font-weight-bold">எடை</label>
-                  <input
-                    type="number"
-                    className="form-control ml-md-4"
-                    name="weight"
-                    placeholder="Enter Weight"
-                  />
-                </div>
-                <div className="d-flex flex-row">
-                  <label className="text-nowrap font-weight-bold">விலை</label>
-                  <input
-                    type="number"
-                    className="form-control ml-md-4"
-                    name="rate"
-                    placeholder="Enter Rate"
-                  />
-                </div>
-              </div> */}
               <div className="d-flex flex-row justify-content-around align-items-center m-md-3">
                 <div className="d-flex flex-row">
                   <label className="text-nowrap font-weight-bold">CGST</label>
                   <input
                     type="number"
                     className="form-control ml-md-4"
+                    value={this.state.textInputs.cgst}
+                    onChange={event =>
+                      this.handleTextInputChange(event, "cgst")
+                    }
                     name="cgst"
                     placeholder="Enter CSGT Rate"
                   />
@@ -174,6 +236,10 @@ class NewInvoice extends Component {
                   <input
                     type="number"
                     className="form-control ml-md-4"
+                    value={this.state.textInputs.sgst}
+                    onChange={event =>
+                      this.handleTextInputChange(event, "sgst")
+                    }
                     name="sgst"
                     placeholder="Enter SGST Rate"
                   />
@@ -182,7 +248,7 @@ class NewInvoice extends Component {
             </div>
             <div className="d-flex flex-row justify-content-center">
               <input
-                className="form-control w-25 bg-success text-primary"
+                className="form-control btn btn-outline-success w-25 text-primary"
                 type="submit"
                 value="Next"
                 onClick={this.mySubmitHandler}

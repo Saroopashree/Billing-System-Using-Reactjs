@@ -3,16 +3,19 @@ class Checkbox extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isChecked: false
+      isChecked: false,
+      weight: this.props.weight,
+      rate: this.props.rate
     };
   }
 
   handleCheckboxChange = event => {
     this.setState({ isChecked: !this.state.isChecked });
-    this.props.handleChange(event);
+    this.props.handleCheckboxChange(event);
   };
 
   renderWeightAndRate = () => {
+    const { label } = this.props;
     if (this.state.isChecked) {
       return (
         <div className="d-flex flex-row justify-content-between align-items-center m-md-3 pl-md-5 w-50">
@@ -21,6 +24,8 @@ class Checkbox extends Component {
             <input
               type="number"
               className="form-control ml-md-3"
+              value={this.props.weight}
+              onChange={event => this.props.handleTextChange(event, label)}
               name="weight"
               placeholder="Enter Weight"
             />
@@ -30,16 +35,16 @@ class Checkbox extends Component {
             <input
               type="number"
               className="form-control ml-md-3"
+              value={this.props.rate}
+              onChange={event => this.props.handleTextChange(event, label)}
               name="rate"
               placeholder="Enter Rate"
             />
           </div>
         </div>
       );
-    }
-    else
-      return null;
-  }
+    } else return null;
+  };
 
   render() {
     const { label } = this.props;
