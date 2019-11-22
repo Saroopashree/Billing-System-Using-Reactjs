@@ -3,20 +3,6 @@ import data from "../assets/partyData";
 
 class ViewParty extends Component {
   buildRows = () => {
-    /* let numRows = Array(Object.keys(data).length);
-    var rowValues = Array(Object.keys(data));
-    return rowValues.forEach(i => {
-      console.log(i, ": ", data[i]);
-      return (
-        <tr>
-          <th scope="row">{i}</th>
-          <td>{data[i]["Address"]}</td>
-          <td>{data[i]["GSTIN"]}</td>
-          <td>{data[i]["Party Name"]}</td>
-        </tr>
-      );
-    }); */
-
     var rowValues = [];
     for (var key in data) {
       var val = data[key];
@@ -50,21 +36,6 @@ class ViewParty extends Component {
             </tr>
           </thead>
           <tbody>
-            {/* <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-          </tr> */}
             {this.buildRows()}
           </tbody>
         </table>
