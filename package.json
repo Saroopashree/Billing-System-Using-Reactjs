@@ -20,6 +20,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "rebuild": "electron-rebuild -f -w sqlite3",
     "electron-dev": "concurrently \"BROWSER=none npm run start\" \"wait-on http://localhost:3000 && electron .\""
   },
   "eslintConfig": {
@@ -37,5 +38,8 @@
       "last 1 safari version"
     ]
   },
-  "main": "public/main.js"
+  "main": "public/main.js",
+  "devDependencies": {
+    "electron-rebuild": "^1.8.8"
+  }
 }

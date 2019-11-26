@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Header from "./header";
 import data from "../assets/partyData";
 
 class ViewParty extends Component {
@@ -25,20 +26,21 @@ class ViewParty extends Component {
 
   render() {
     return (
-      <div className="p-md-5">
-        <table className="table table-striped">
-          <thead className="thead-dark">
-            <tr>
-              <th scope="col">Key</th>
-              <th scope="col">Party Address</th>
-              <th scope="col">Party GSTIN</th>
-              <th scope="col">Party Name</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.buildRows()}
-          </tbody>
-        </table>
+      <div>
+        <Header newInvoice={"nav-item"} viewParty={"nav-item active"} />
+        <div className="p-md-5">
+          <table className="table table-striped">
+            <thead className="thead-dark">
+              <tr>
+                <th scope="col">Key</th>
+                <th scope="col">Party Address</th>
+                <th scope="col">Party GSTIN</th>
+                <th scope="col">Party Name</th>
+              </tr>
+            </thead>
+            <tbody>{this.buildRows()}</tbody>
+          </table>
+        </div>
       </div>
     );
   }
