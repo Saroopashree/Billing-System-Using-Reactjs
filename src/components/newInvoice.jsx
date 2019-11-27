@@ -58,7 +58,7 @@ class NewInvoice extends Component {
     super();
     this.state = {
       checkboxes: checkboxState,
-      key: null,
+      key: "",
       textInputs: {
         billNumber: "",
         billDate: "",

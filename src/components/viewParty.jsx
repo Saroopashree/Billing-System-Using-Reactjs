@@ -24,6 +24,12 @@ class ViewParty extends Component {
     });
   };
 
+  clicked = () => {
+    const fs = require("electron").remote.require("fs");
+    var data = JSON.parse(fs.readFileSync("./src/assets/data.json"));
+    console.log(data);
+  }
+
   render() {
     return (
       <div>
@@ -40,6 +46,7 @@ class ViewParty extends Component {
             </thead>
             <tbody>{this.buildRows()}</tbody>
           </table>
+          <button onClick={this.clicked}>Fetch Data</button>
         </div>
       </div>
     );
