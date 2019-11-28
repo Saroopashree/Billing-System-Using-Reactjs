@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import Checkbox from "./checkbox";
 import Header from "./header";
-import data from "../assets/partyData";
 
 const ITEMS = [
   "புதிய அலுமினிய பாத்திரங்கள்",
@@ -73,11 +72,6 @@ class NewInvoice extends Component {
     };
   }
 
-  /* componentDidUpdate = (prevProps, prevState) => {
-    console.log("Component Updated");
-    console.log(this.state.textInputs);
-  }; */
-
   handleCheckboxChange = event => {
     const { name } = event.target;
 
@@ -114,10 +108,12 @@ class NewInvoice extends Component {
 
   handleKeyChange = event => {
     const { value } = event.target;
-    const val = data[value.toString()];
+    const data = require("../assets/data.json");
+
+    const val = data["parties"][value.toString()];
     this.setState({ key: value });
-    console.log(Object.keys(data).length);
-    if (value && value <= Object.keys(data).length) {
+    
+    if (value && value <= Object.keys(data["parties"]).length) {
       this.setState(prevState => ({
         textInputs: {
           ...prevState.textInputs,
