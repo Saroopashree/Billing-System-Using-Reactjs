@@ -4,10 +4,13 @@ class Checkbox extends Component {
     super(props);
     this.state = {
       isChecked: false,
-      weight: this.props.weight,
-      rate: this.props.rate
     };
   }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    console.log(this.props.price);
+  };
+  
 
   handleCheckboxChange = event => {
     this.setState({ isChecked: !this.state.isChecked });
@@ -18,8 +21,8 @@ class Checkbox extends Component {
     const { label } = this.props;
     if (this.state.isChecked) {
       return (
-        <div className="d-flex flex-row justify-content-between align-items-center m-md-3 pl-md-5 w-50">
-          <div className="d-flex flex-row mx-md-4">
+        <div className="d-flex flex-row justify-content-between align-contents-center mx-md-3">
+          <div className="d-flex flex-row align-items-center mx-md-4">
             <label className="text-nowrap font-weight-normal">எடை</label>
             <input
               type="number"
@@ -30,7 +33,7 @@ class Checkbox extends Component {
               placeholder="Enter Weight"
             />
           </div>
-          <div className="d-flex flex-row mx-md-4">
+          <div className="d-flex flex-row align-items-center mx-md-4">
             <label className="text-nowrap font-weight-normal">விலை</label>
             <input
               type="number"
@@ -41,6 +44,17 @@ class Checkbox extends Component {
               placeholder="Enter Rate"
             />
           </div>
+          <div className="d-flex flex-row align-items-center align-content-center mx-md-4">
+            <label
+              className="text-nowrap text-danger font-weight-normal mx-md-3"
+              style={{ fontSize: "1.2rem" }}
+            >
+              Price
+            </label>
+            <span className="text-danger" style={{ fontSize: "1.2rem" }}>
+              {this.props.price}
+            </span>
+          </div>
         </div>
       );
     } else return null;
@@ -50,17 +64,22 @@ class Checkbox extends Component {
     const { label } = this.props;
 
     return (
-      <div>
-        <label className="font-weight-bold">
-          <input
-            className="mx-md-3"
-            type="checkbox"
-            checked={this.state.isChecked}
-            onChange={this.handleCheckboxChange}
-          />
-          {label}
-        </label>
-        {this.renderWeightAndRate()}
+      <div
+        className="d-flex flex-row align-items-center"
+        style={{ height: "3rem" }}
+      >
+        <div style={{ width: "40%" }}>
+          <label className="font-weight-bold">
+            <input
+              className="mx-md-3"
+              type="checkbox"
+              checked={this.state.isChecked}
+              onChange={this.handleCheckboxChange}
+            />
+            {label}
+          </label>
+        </div>
+        <div>{this.renderWeightAndRate()}</div>
       </div>
     );
   }

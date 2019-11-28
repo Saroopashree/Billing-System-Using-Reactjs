@@ -2,55 +2,7 @@ import React, { Component } from "react";
 import Checkbox from "./checkbox";
 import Header from "./header";
 
-const ITEMS = [
-  "புதிய அலுமினிய பாத்திரங்கள்",
-  "பழைய வேஸ்ட் அலுமினிய பாத்திரங்கள்",
-  "பழைய வேஸ்ட் அலுமினிய பாத்திரங்கள் மெட்டல்",
-  "பழைய வேஸ்ட் பித்தளை பொருட்கள்",
-  "பழைய வேஸ்ட் செம்பு பொருட்கள்",
-  "பழைய வேஸ்ட் பிளாஸ்டிக் பொருட்கள்",
-  "பழைய வேஸ்ட் இரும்பு பொருட்கள்",
-  "அலுமினியம் தகடு (உருமாற்றம் செய்ய)",
-  "வடிதட்டம்",
-  "பிளாஸ்டிக் குடம்",
-  "பிளாஸ்டிக் டப்பு",
-  "பிளாஸ்டிக் வாட்டர் கேன்",
-  "பிளாஸ்டிக் ஸ்டூல்",
-  "SS பாத்திரங்கள்"
-];
-
-const checkboxState = {
-  "புதிய அலுமினிய பாத்திரங்கள்": false,
-  "பழைய வேஸ்ட் அலுமினிய பாத்திரங்கள்": false,
-  "பழைய வேஸ்ட் அலுமினிய பாத்திரங்கள் மெட்டல்": false,
-  "பழைய வேஸ்ட் பித்தளை பொருட்கள்": false,
-  "பழைய வேஸ்ட் செம்பு பொருட்கள்": false,
-  "பழைய வேஸ்ட் பிளாஸ்டிக் பொருட்கள்": false,
-  "பழைய வேஸ்ட் இரும்பு பொருட்கள்": false,
-  "அலுமினியம் தகடு (உருமாற்றம் செய்ய)": false,
-  வடிதட்டம்: false,
-  "பிளாஸ்டிக் குடம்": false,
-  "பிளாஸ்டிக் டப்பு": false,
-  "பிளாஸ்டிக் வாட்டர் கேன்": false,
-  "பிளாஸ்டிக் ஸ்டூல்": false,
-  "SS பாத்திரங்கள்": false
-};
-const textInputState = {
-  "புதிய அலுமினிய பாத்திரங்கள்": "",
-  "பழைய வேஸ்ட் அலுமினிய பாத்திரங்கள்": "",
-  "பழைய வேஸ்ட் அலுமினிய பாத்திரங்கள் மெட்டல்": "",
-  "பழைய வேஸ்ட் பித்தளை பொருட்கள்": "",
-  "பழைய வேஸ்ட் செம்பு பொருட்கள்": "",
-  "பழைய வேஸ்ட் பிளாஸ்டிக் பொருட்கள்": "",
-  "பழைய வேஸ்ட் இரும்பு பொருட்கள்": "",
-  "அலுமினியம் தகடு (உருமாற்றம் செய்ய)": "",
-  வடிதட்டம்: "",
-  "பிளாஸ்டிக் குடம்": "",
-  "பிளாஸ்டிக் டப்பு": "",
-  "பிளாஸ்டிக் வாட்டர் கேன்": "",
-  "பிளாஸ்டிக் ஸ்டூல்": "",
-  "SS பாத்திரங்கள்": ""
-};
+import ITEMS, { checkboxState, textInputState, priceState } from "../utils/constants";
 
 class NewInvoice extends Component {
   constructor() {
@@ -68,7 +20,8 @@ class NewInvoice extends Component {
         partyGSTIN: "",
         cgst: "",
         sgst: ""
-      }
+      },
+      price: { ...priceState }
     };
   }
 
@@ -85,15 +38,25 @@ class NewInvoice extends Component {
 
   handleTextInputChange = (event, label) => {
     const { name, value } = event.target;
-    console.log(name, ": ", value);
 
+    console.log(
+      Number(this.state.textInputs.weight[label]) *
+        Number(this.state.textInputs.rate[label])
+    );
     if (name === "weight" || name === "rate") {
       this.setState(prevState => ({
+        ...prevState,
         textInputs: {
           ...prevState.textInputs,
           [name]: {
             [label]: value
           }
+        },
+        price: {
+          ...prevState.price,
+          [label]:
+            Number(this.state.textInputs.weight[label]) *
+            Number(this.state.textInputs.rate[label])
         }
       }));
     } else {
@@ -112,7 +75,7 @@ class NewInvoice extends Component {
 
     const val = data["parties"][value.toString()];
     this.setState({ key: value });
-    
+
     if (value && value <= Object.keys(data["parties"]).length) {
       this.setState(prevState => ({
         textInputs: {
@@ -146,6 +109,7 @@ class NewInvoice extends Component {
           isSelected={this.state.checkboxes[item]}
           weight={this.state.textInputs.weight[item]}
           rate={this.state.textInputs.rate[item]}
+          price={this.state.price[item]}
           handleCheckboxChange={this.handleCheckboxChange}
           handleTextChange={this.handleTextInputChange}
         />
@@ -156,7 +120,7 @@ class NewInvoice extends Component {
   render() {
     return (
       <div>
-        <Header newInvoice={"nav-item active"} viewParty={"nav-item"}/>
+        <Header newInvoice={"nav-item active"} viewParty={"nav-item"} />
         <div className="m-md-4">
           <form>
             <fieldset>
@@ -254,7 +218,7 @@ class NewInvoice extends Component {
                     />
                   </div>
                 </div>
-                <div>{this.createCheckboxes()}</div>
+                <div className="pt-md-3">{this.createCheckboxes()}</div>
                 <div className="d-flex flex-row justify-content-around align-items-center m-md-3">
                   <div className="d-flex flex-row">
                     <label className="text-nowrap font-weight-bold">CGST</label>
@@ -286,7 +250,8 @@ class NewInvoice extends Component {
               </div>
               <div className="d-flex flex-row justify-content-center">
                 <input
-                  className="form-control btn btn-outline-success w-25 text-primary"
+                  className="form-control btn btn-outline-success text-primary mt-md-3"
+                  style={{ width: "15%" }}
                   type="submit"
                   value="Next"
                   onClick={this.mySubmitHandler}
