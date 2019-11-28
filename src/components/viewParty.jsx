@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Header from "./header";
-// import data from "../assets/partyData";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPlus, faCheck } from "@fortawesome/free-solid-svg-icons";
 
@@ -136,14 +135,12 @@ class ViewParty extends Component {
       Key: key,
       Address: this.state.partyAddress,
       GSTIN: this.state.GSTIN,
-      partyName: partyName
+      "Party Name": partyName
     };
     console.log(data);
     fs.writeFileSync(
       path.join(__dirname + "/../assets/data.json"),
-      JSON.stringify(data),
-      null,
-      2
+      JSON.stringify(data, null, 2)
     );
 
     this.setState({
