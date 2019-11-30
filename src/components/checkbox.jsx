@@ -3,14 +3,9 @@ class Checkbox extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isChecked: false,
+      isChecked: false
     };
   }
-
-  componentDidUpdate = (prevProps, prevState) => {
-    console.log(this.props.price);
-  };
-  
 
   handleCheckboxChange = event => {
     this.setState({ isChecked: !this.state.isChecked });
@@ -44,16 +39,19 @@ class Checkbox extends Component {
               placeholder="Enter Rate"
             />
           </div>
-          <div className="d-flex flex-row align-items-center align-content-center mx-md-4">
+          <div
+            className="d-flex flex-row align-items-center align-content-center mx-md-4 position-static"
+            style={{ width: "35%" }}
+          >
             <label
-              className="text-nowrap text-danger font-weight-normal mx-md-3"
+              className="text-nowrap text-primary font-weight-normal mx-md-3"
               style={{ fontSize: "1.2rem" }}
             >
               Price
             </label>
-            <span className="text-danger" style={{ fontSize: "1.2rem" }}>
-              {this.props.price}
-            </span>
+            <div className="text-danger flex-grow-1 justify-content-end" style={{ fontSize: "1.2rem" }}>
+              {this.props.price.toString()}
+            </div>
           </div>
         </div>
       );

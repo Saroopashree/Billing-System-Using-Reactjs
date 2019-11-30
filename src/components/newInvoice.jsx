@@ -2,7 +2,11 @@ import React, { Component } from "react";
 import Checkbox from "./checkbox";
 import Header from "./header";
 
-import ITEMS, { checkboxState, textInputState, priceState } from "../utils/constants";
+import ITEMS, {
+  checkboxState,
+  textInputState,
+  priceState
+} from "../utils/constants";
 
 class NewInvoice extends Component {
   constructor() {
@@ -39,26 +43,44 @@ class NewInvoice extends Component {
   handleTextInputChange = (event, label) => {
     const { name, value } = event.target;
 
-    console.log(
-      Number(this.state.textInputs.weight[label]) *
-        Number(this.state.textInputs.rate[label])
-    );
-    if (name === "weight" || name === "rate") {
-      this.setState(prevState => ({
-        ...prevState,
-        textInputs: {
-          ...prevState.textInputs,
-          [name]: {
-            [label]: value
+    if (name === "weight") {
+      this.setState(
+        prevState => ({
+          ...prevState,
+          textInputs: {
+            ...prevState.textInputs,
+            ["weight"]: {
+              [label]: value
+            }
+          },
+          price: {
+            ...prevState.price,
+            [label]: (
+              Number(value) * Number(this.state.textInputs.rate[label])
+            ).toFixed(2)
           }
-        },
-        price: {
-          ...prevState.price,
-          [label]:
-            Number(this.state.textInputs.weight[label]) *
-            Number(this.state.textInputs.rate[label])
-        }
-      }));
+        })
+        // () => console.log("new price: ", this.state.price)
+      );
+    } else if (name === "rate") {
+      this.setState(
+        prevState => ({
+          ...prevState,
+          textInputs: {
+            ...prevState.textInputs,
+            ["rate"]: {
+              [label]: value
+            }
+          },
+          price: {
+            ...prevState.price,
+            [label]: (
+              Number(this.state.textInputs.weight[label]) * Number(value)
+            ).toFixed(2)
+          }
+        })
+        // () => console.log("new price: ", this.state.price)
+      );
     } else {
       this.setState(prevState => ({
         textInputs: {
@@ -127,13 +149,14 @@ class NewInvoice extends Component {
               <legend>Billing</legend>
               <div className="d-flex flex-column justify-items-around">
                 <div className="d-flex flex-row justify-content-between align-items-center m-md-3">
-                  <div className="d-flex flex-row">
+                  <div className="d-flex flex-row" style={{ width: "24%" }}>
                     <label className="text-nowrap font-weight-bold">
                       பில் நம்பர்
                     </label>
                     <input
                       type="number"
                       className="form-control ml-md-4"
+                      style={{ width: "11rem" }}
                       value={this.state.textInputs.billNumber}
                       onChange={event =>
                         this.handleTextInputChange(event, "billNumber")
@@ -142,13 +165,17 @@ class NewInvoice extends Component {
                       placeholder="Enter Bill Number"
                     />
                   </div>
-                  <div className="d-flex flex-row">
+                  <div
+                    className="d-flex flex-row px-md-5"
+                    style={{ width: "36%" }}
+                  >
                     <label className="text-nowrap font-weight-bold">
                       பில் தேதி
                     </label>
                     <input
                       type="date"
                       className="form-control ml-md-4"
+                      style={{ width: "11rem" }}
                       value={this.state.textInputs.billDate}
                       onChange={event =>
                         this.handleTextInputChange(event, "billDate")
@@ -157,13 +184,17 @@ class NewInvoice extends Component {
                       placeholder="Enter Bill Date"
                     />
                   </div>
-                  <div className="d-flex flex-row">
+                  <div
+                    className="d-flex flex-row px-md-4"
+                    style={{ width: "30%" }}
+                  >
                     <label className="text-nowrap font-weight-bold">
                       வண்டி நம்பர்
                     </label>
                     <input
                       type="text"
                       className="form-control ml-md-4"
+                      style={{ width: "11rem" }}
                       value={this.state.textInputs.vehicleNumber}
                       onChange={event =>
                         this.handleTextInputChange(event, "vehicleNumber")
@@ -174,21 +205,22 @@ class NewInvoice extends Component {
                   </div>
                 </div>
                 <div className="d-flex flex-row justify-content-between align-items-center m-md-3">
-                  <div className="d-flex flex-row">
-                    <label className="text-nowrap font-weight-bold pl-4 pr-1">
+                  <div className="d-flex flex-row" style={{ width: "24%" }}>
+                    <label className="text-nowrap font-weight-bold pl-4 mr-md-3">
                       Key
                     </label>
                     <input
                       type="number"
                       className="form-control ml-md-4"
+                      style={{ width: "7rem" }}
                       value={this.state.key}
                       onChange={event => this.handleKeyChange(event)}
                       name="Key"
                       placeholder="Enter Key"
                     />
                   </div>
-                  <div className="d-flex flex-row">
-                    <label className="text-nowrap font-weight-bold px-2">
+                  <div className="d-flex flex-row" style={{ width: "36%" }}>
+                    <label className="text-nowrap font-weight-bold px-md-2">
                       பார்ட்டி முகவரி
                     </label>
                     <input
@@ -202,13 +234,14 @@ class NewInvoice extends Component {
                       placeholder="Enter Party Address"
                     />
                   </div>
-                  <div className="d-flex flex-row">
+                  <div className="d-flex flex-row" style={{ width: "30%" }}>
                     <label className="text-nowrap font-weight-bold px-2">
                       பார்ட்டி GSTIN
                     </label>
                     <input
                       type="text"
                       className="form-control ml-md-4"
+                      style={{ width: "50%" }}
                       value={this.state.textInputs.partyGSTIN}
                       onChange={event =>
                         this.handleTextInputChange(event, "partyGSTIN")
