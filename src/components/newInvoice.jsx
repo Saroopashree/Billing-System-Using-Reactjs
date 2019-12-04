@@ -7,6 +7,7 @@ import ITEMS, {
   textInputState,
   priceState
 } from "../utils/constants";
+const ipcRenderer = require("electron").ipcRenderer;
 
 class NewInvoice extends Component {
   constructor() {
@@ -60,7 +61,6 @@ class NewInvoice extends Component {
             ).toFixed(2)
           }
         })
-        // () => console.log("new price: ", this.state.price)
       );
     } else if (name === "rate") {
       this.setState(
@@ -79,7 +79,6 @@ class NewInvoice extends Component {
             ).toFixed(2)
           }
         })
-        // () => console.log("new price: ", this.state.price)
       );
     } else {
       this.setState(prevState => ({
@@ -119,7 +118,9 @@ class NewInvoice extends Component {
 
   mySubmitHandler = event => {
     event.preventDefault();
-    alert("You are submitting ");
+    ipcRenderer.send("show-invoice", this.state);
+    ipcRenderer.send("get-args", this.state);
+    // alert("You are submitting ");
   };
 
   createCheckboxes = () => {
