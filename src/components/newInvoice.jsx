@@ -2,15 +2,10 @@ import React, { Component } from "react";
 import Checkbox from "./checkbox";
 import Header from "./header";
 
-import ITEMS, {
-  checkboxState,
-  textInputState,
-  priceState
-} from "../utils/constants";
-const ipcRenderer = require("electron").ipcRenderer;
+import ITEMS from "../utils/constants";
 
 class NewInvoice extends Component {
-  constructor() {
+  /* constructor() {
     super();
     this.state = {
       checkboxes: checkboxState,
@@ -118,29 +113,35 @@ class NewInvoice extends Component {
 
   mySubmitHandler = event => {
     event.preventDefault();
-    ipcRenderer.send("show-invoice", this.state);
-    ipcRenderer.send("get-args", this.state);
-    // alert("You are submitting ");
-  };
+    alert("You are submitting ");
+  }; */
 
   createCheckboxes = () => {
+    const { states, handleCheckboxChange, handleTextInputChange } = this.props;
     return ITEMS.map(item => {
       return (
         <Checkbox
           key={item}
           label={item}
-          isSelected={this.state.checkboxes[item]}
-          weight={this.state.textInputs.weight[item]}
-          rate={this.state.textInputs.rate[item]}
-          price={this.state.price[item]}
-          handleCheckboxChange={this.handleCheckboxChange}
-          handleTextChange={this.handleTextInputChange}
+          isSelected={states.checkboxes[item]}
+          weight={states.textInputs.weight[item]}
+          rate={states.textInputs.rate[item]}
+          price={states.price[item]}
+          handleCheckboxChange={handleCheckboxChange}
+          handleTextChange={handleTextInputChange}
         />
       );
     });
   };
 
   render() {
+    const {
+      states,
+      handleKeyChange,
+      handleTextInputChange,
+      onSubmit
+    } = this.props;
+
     return (
       <div>
         <Header newInvoice={"nav-item active"} viewParty={"nav-item"} />
@@ -158,9 +159,9 @@ class NewInvoice extends Component {
                       type="number"
                       className="form-control ml-md-4"
                       style={{ width: "11rem" }}
-                      value={this.state.textInputs.billNumber}
+                      value={states.textInputs.billNumber}
                       onChange={event =>
-                        this.handleTextInputChange(event, "billNumber")
+                        handleTextInputChange(event, "billNumber")
                       }
                       name="billNumber"
                       placeholder="Enter Bill Number"
@@ -177,9 +178,9 @@ class NewInvoice extends Component {
                       type="date"
                       className="form-control ml-md-4"
                       style={{ width: "11rem" }}
-                      value={this.state.textInputs.billDate}
+                      value={states.textInputs.billDate}
                       onChange={event =>
-                        this.handleTextInputChange(event, "billDate")
+                        handleTextInputChange(event, "billDate")
                       }
                       name="billDate"
                       placeholder="Enter Bill Date"
@@ -196,9 +197,9 @@ class NewInvoice extends Component {
                       type="text"
                       className="form-control ml-md-4"
                       style={{ width: "11rem" }}
-                      value={this.state.textInputs.vehicleNumber}
+                      value={states.textInputs.vehicleNumber}
                       onChange={event =>
-                        this.handleTextInputChange(event, "vehicleNumber")
+                        handleTextInputChange(event, "vehicleNumber")
                       }
                       name="vehicleNumber"
                       placeholder="Enter Vehicle Number"
@@ -214,8 +215,8 @@ class NewInvoice extends Component {
                       type="number"
                       className="form-control ml-md-4"
                       style={{ width: "7rem" }}
-                      value={this.state.key}
-                      onChange={event => this.handleKeyChange(event)}
+                      value={states.key}
+                      onChange={event => handleKeyChange(event)}
                       name="Key"
                       placeholder="Enter Key"
                     />
@@ -227,9 +228,9 @@ class NewInvoice extends Component {
                     <input
                       type="text"
                       className="form-control ml-md-4"
-                      value={this.state.textInputs.partyAddress}
+                      value={states.textInputs.partyAddress}
                       onChange={event =>
-                        this.handleTextInputChange(event, "partyAddress")
+                        handleTextInputChange(event, "partyAddress")
                       }
                       name="partyAddress"
                       placeholder="Enter Party Address"
@@ -243,9 +244,9 @@ class NewInvoice extends Component {
                       type="text"
                       className="form-control ml-md-4"
                       style={{ width: "50%" }}
-                      value={this.state.textInputs.partyGSTIN}
+                      value={states.textInputs.partyGSTIN}
                       onChange={event =>
-                        this.handleTextInputChange(event, "partyGSTIN")
+                        handleTextInputChange(event, "partyGSTIN")
                       }
                       name="partyGSTIN"
                       placeholder="Enter Party GSTIN"
@@ -259,10 +260,8 @@ class NewInvoice extends Component {
                     <input
                       type="number"
                       className="form-control ml-md-4"
-                      value={this.state.textInputs.cgst}
-                      onChange={event =>
-                        this.handleTextInputChange(event, "cgst")
-                      }
+                      value={states.textInputs.cgst}
+                      onChange={event => handleTextInputChange(event, "cgst")}
                       name="cgst"
                       placeholder="Enter CSGT Rate"
                     />
@@ -272,10 +271,8 @@ class NewInvoice extends Component {
                     <input
                       type="number"
                       className="form-control ml-md-4"
-                      value={this.state.textInputs.sgst}
-                      onChange={event =>
-                        this.handleTextInputChange(event, "sgst")
-                      }
+                      value={states.textInputs.sgst}
+                      onChange={event => handleTextInputChange(event, "sgst")}
                       name="sgst"
                       placeholder="Enter SGST Rate"
                     />
@@ -288,7 +285,7 @@ class NewInvoice extends Component {
                   style={{ width: "15%" }}
                   type="submit"
                   value="Next"
-                  onClick={this.mySubmitHandler}
+                  onClick={onSubmit}
                 />
               </div>
             </fieldset>
