@@ -1,21 +1,14 @@
 import React, { Component } from "react";
 
 class Checkbox extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isChecked: false
-    };
-  }
 
   handleCheckboxChange = event => {
-    this.setState({ isChecked: !this.state.isChecked });
     this.props.handleCheckboxChange(event);
   };
 
   renderWeightAndRate = () => {
     const { label } = this.props;
-    if (this.state.isChecked) {
+    if (this.props.isSelected) {
       return (
         <div className="d-flex flex-row justify-content-between align-contents-center mx-md-3">
           <div className="d-flex flex-row align-items-center mx-md-4">
@@ -72,8 +65,9 @@ class Checkbox extends Component {
             <input
               className="mx-md-3"
               type="checkbox"
-              checked={this.state.isChecked}
-              onChange={this.handleCheckboxChange}
+              name={label}
+              checked={this.props.isSelected}
+              onChange={(event) => this.handleCheckboxChange(event)}
             />
             {label}
           </label>

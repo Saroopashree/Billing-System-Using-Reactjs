@@ -66,7 +66,6 @@ class App extends Component {
             ).toFixed(2)
           }
         })
-        // () => console.log("new price: ", this.state.price)
       );
     } else if (name === "rate") {
       this.setState(
@@ -86,7 +85,6 @@ class App extends Component {
             ).toFixed(2)
           }
         })
-        // () => console.log("new price: ", this.state.price)
       );
     } else {
       this.setState(prevState => ({
@@ -138,7 +136,6 @@ class App extends Component {
                 handleKeyChange={this.handleKeyChange}
                 handleTextInputChange={this.handleTextInputChange}
                 handleCheckboxChange={this.handleCheckboxChange}
-                onSubmit={this.handleSubmit}
               />}
           />
           <Route path="/viewParty" component={ViewParty} />
