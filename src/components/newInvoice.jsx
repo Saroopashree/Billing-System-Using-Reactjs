@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import Checkbox from "./checkbox";
 import Header from "./header";
 
@@ -178,6 +179,8 @@ class NewInvoice extends Component {
                       type="date"
                       className="form-control ml-md-4"
                       style={{ width: "11rem" }}
+                      data-date=""
+                      data-date-format="DD MM YYYY"
                       value={states.textInputs.billDate}
                       onChange={event =>
                         handleTextInputChange(event, "billDate")
@@ -280,13 +283,15 @@ class NewInvoice extends Component {
                 </div>
               </div>
               <div className="d-flex flex-row justify-content-center">
-                <input
-                  className="form-control btn btn-outline-success text-primary mt-md-3"
-                  style={{ width: "15%" }}
-                  type="submit"
-                  value="Next"
-                  onClick={onSubmit}
-                />
+                <button
+                  className="form-control btn btn-primary text-light mt-md-3"
+                  style={{ width: "20%" }}
+                  // type="submit"
+                  // value="Next"
+                  // onClick={onSubmit}
+                >
+                  <Link className="text-light" style={{textDecoration: "none"}} to={"/previewInvoice"}>See Preview Of Invoice</Link>
+                </button>
               </div>
             </fieldset>
           </form>

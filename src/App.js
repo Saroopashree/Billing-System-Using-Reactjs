@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { HashRouter } from "react-router-dom";
 import { Route } from "react-router";
+
 import {
   checkboxState,
   textInputState,
@@ -10,6 +11,7 @@ import {
 
 import NewInvoice from "./components/newInvoice";
 import ViewParty from "./components/viewParty";
+import PreviewInvoice from "./components/previewInvoice";
 
 class App extends Component {
   constructor() {
@@ -53,6 +55,7 @@ class App extends Component {
           textInputs: {
             ...prevState.textInputs,
             ["weight"]: {
+              ...prevState.textInputs["weight"],
               [label]: value
             }
           },
@@ -72,6 +75,7 @@ class App extends Component {
           textInputs: {
             ...prevState.textInputs,
             ["rate"]: {
+              ...prevState.textInputs["rate"],
               [label]: value
             }
           },
@@ -120,11 +124,6 @@ class App extends Component {
     }
   };
 
-  handleSubmit = event => {
-    event.preventDefault();
-    alert("You are submitting ");
-  };
-
   render() {
     return (
       <div className="App">
@@ -142,7 +141,23 @@ class App extends Component {
                 onSubmit={this.handleSubmit}
               />}
           />
-          <Route path="/viewParty" render={ViewParty} />
+          <Route path="/viewParty" component={ViewParty} />
+          <Route path="/previewInvoice" render={
+            (props) => <PreviewInvoice
+              {...props}
+              billNumber={this.state.textInputs.billNumber}
+              billDate={this.state.textInputs.billDate}
+              vehicleNumber={this.state.textInputs.vehicleNumber}
+              weight={this.state.textInputs.weight}
+              rate={this.state.textInputs.rate}
+              partyAddress={this.state.textInputs.partyAddress}
+              partyGSTIN={this.state.textInputs.partyGSTIN}
+              cgst={this.state.textInputs.cgst}
+              sgst={this.state.textInputs.sgst}
+              checkboxes={this.state.checkboxes}
+              price={this.state.price}
+            />}
+          />
         </HashRouter>
       </div>
     );

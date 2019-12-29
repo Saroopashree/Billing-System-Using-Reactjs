@@ -6,6 +6,7 @@ const path = require('path');
 const url = require('url');
 const isDev = require('electron-is-dev');
 const ipcMain = electron.ipcMain;
+const shell = electron.shell
 
 let mainWindow;
 let invoiceWindow;
@@ -18,13 +19,43 @@ function createMainWindow() {
 
 app.on('ready', createMainWindow);
 
-ipcMain.on("show-invoice", (event, args) => {
-  invoiceWindow = new BrowserWindow({ width: 900, height: 800, webPreferences: { nodeIntegration: true }});
+ipcMain.on("preview-invoice", (event, args) => {
+  invoiceWindow = new BrowserWindow({ width: 900, height: 800, webPreferences: { nodeIntegration: true } });
   invoiceWindow.loadURL(isDev ? `file://${path.join(__dirname, './invoice.html')}` : `file://${path.join(__dirname, '../build/invoice.html')}`);
-  invoiceWindow.webContents.openDevTools();
+  // invoiceWindow.webContents.openDevTools();
   invoiceWindow.on('closed', () => invoiceWindow = null);
 
   // invoiceWindow.webContents.send("get-args", {hello: "hey there!"});
+});
+
+ipcMain.on("print-to-pdf", (event) => {
+  const pdfPath = path.join(__dirname, "../invoices/print.pdf");
+  const window = BrowserWindow.fromWebContents(event.sender);
+  window.webContents.printToPDF({
+    landscape: false,
+    pageSize: "A4"
+  }, (error, data) => {
+    console.log(data);
+    console.log(error);
+    pdfPath = error;
+    if (error) {
+      pdfPath = error;
+    }
+    try {
+      fs.writeFile("~/Documents/Learning/print.pdf", data);
+    } catch (error) {
+      pdfPath = error;
+    }
+    /*     fs.writeFile(pdfPath, data, function (error) {
+          if (error) { 
+            // throw error;
+            event.sender.send('wrote-pdf', error);
+          }
+          shell.openExternal('file://' + pdfPath);
+          // event.sender.send('wrote-pdf', pdfPath);
+        }); */
+  });
+  event.sender.send('wrote-pdf', pdfPath);
 });
 
 app.on('window-all-closed', () => {
