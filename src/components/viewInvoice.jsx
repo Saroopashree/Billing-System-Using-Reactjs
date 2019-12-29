@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
+import React from "react";
 
-class ViewInvoice extends Component {
-  render() {
-    return (
-      <div>
-        
-      </div>
-    )
-  }
+function ViewInvoice(props) {
+  return (
+    <div
+      style={{ alignSelf: "center", flex: 1, justifyContents: "center" }}
+    >
+      Invoice will display here...
+    </div>
+  );
 }
 
 export default ViewInvoice;
