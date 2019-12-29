@@ -84,7 +84,7 @@ class PreviewInvoice extends Component {
     return (
       <div>
         <div className="d-flex justify-content-center">
-          <div style={{ width: "70%" }}>
+          <div style={{ width: "60%" }}>
             <div style={{ height: "20px" }}></div>
             <PdfContainer createPdf={this.createPdf} billNumber={billNumber}>
               <div
@@ -128,7 +128,7 @@ class PreviewInvoice extends Component {
                     className="d-flex flex-column"
                     style={{ border: "0.5px solid black", flex: 7 }}
                   >
-                    <span style={{ fontSize: 15, textAlign: "center" }}>
+                    <span style={{ fontSize: 16, textAlign: "center" }}>
                       Ph: 04285 240015
                     </span>
                     <div
@@ -181,7 +181,6 @@ class PreviewInvoice extends Component {
                       className="d-flex flex-row"
                       style={{
                         flex: 1,
-                        border: "0.5px solid black",
                         fontSize: 18
                       }}
                     >
@@ -192,11 +191,11 @@ class PreviewInvoice extends Component {
                         {billNumber}
                       </span>
                     </div>
+                    <div style={{ border: "1px solid black" }}></div>
                     <div
                       className="d-flex flex-row"
                       style={{
                         flex: 1,
-                        border: "0.5px solid black",
                         fontSize: 18
                       }}
                     >
@@ -223,7 +222,10 @@ class PreviewInvoice extends Component {
                     }}
                   >
                     <span style={{ flex: 1 }}>Consignee's GSTIN:</span>
-                    <span style={{ flex: 1, justifySelf: "center" }}>
+                    <span
+                      className="ml-2"
+                      style={{ flex: 1, justifySelf: "center" }}
+                    >
                       {partyGSTIN}
                     </span>
                   </div>
@@ -237,7 +239,10 @@ class PreviewInvoice extends Component {
                     }}
                   >
                     <span style={{ flex: 1 }}>Documents Through:</span>
-                    <span style={{ flex: 1, justifySelf: "center" }}>
+                    <span
+                      className="ml-2"
+                      style={{ flex: 1, justifySelf: "center" }}
+                    >
                       {vehicleNumber}
                     </span>
                   </div>
@@ -360,15 +365,23 @@ class PreviewInvoice extends Component {
                     </div>
                   </div>
                 </div>
+                <div
+                  className="d-flex align-items-center justify-content-end"
+                  style={{ height: "30px", border: "0.5px solid black" }}
+                >
+                  <span className="m-1">For</span>
+                  <span className="mr-3" style={{ fontWeight: "bold" }}>
+                    PARIMALA METAL WORKS
+                  </span>
+                </div>
               </div>
             </PdfContainer>
           </div>
         </div>
-
-        <div style={{ height: "90px" }}></div>
-        {/* <button onClick={() => print(ids)}>Generate PDF</button> */}
         <div className="m-5">
-          <Link to={"/"}>Back</Link>
+          <Link style={{ fontSize: 20 }} to={"/"}>
+            Back
+          </Link>
         </div>
       </div>
     );
