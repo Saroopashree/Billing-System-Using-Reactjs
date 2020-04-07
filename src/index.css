@@ -11,3 +11,11 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+@font-face {
+  font-family: 'Hind Madurai';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Hind Madurai Regular'), local('HindMadurai-Regular'), url(./utils//HindMadurai.woff2) format('woff2')
+}
