@@ -21,7 +21,6 @@
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.12.0",
-    "react-html2pdf": "^1.0.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.3.0",
     "wait-on": "^3.3.0"

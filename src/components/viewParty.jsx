@@ -1,7 +1,13 @@
 import React, { Component } from "react";
 import Header from "./header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserPlus, faCheck } from "@fortawesome/free-solid-svg-icons";
+import {
+  faUserPlus,
+  faCheck,
+  faTimes,
+} from "@fortawesome/free-solid-svg-icons";
+
+import "../App.css";
 
 class ViewParty extends Component {
   constructor(props) {
@@ -12,36 +18,197 @@ class ViewParty extends Component {
       partyAddress: "",
       GSTIN: "",
       partyName: "",
-      dummy: 1
+      clickedKey: null,
+      clickedField: "",
+      fieldValue: "",
     };
+    this.data = require("../assets/data.json");
   }
 
+  modifyField = () => {
+    const fs = require("fs");
+    const path = require("path");
+    if (this.state.fieldValue !== "") {
+      this.data["parties"][this.state.clickedKey][
+        this.state.clickedField
+      ] = this.state.fieldValue;
+    } else {
+      this.data["parties"][this.state.clickedKey][this.state.clickedField] =
+        "-";
+    }
+    fs.writeFileSync(
+      path.join(__dirname + "/../assets/data.json"),
+      JSON.stringify(this.data, null, 2)
+    );
+  };
+
   buildRows = () => {
-    var data = require("../assets/data.json");
+    // var data = require("../assets/data.json");
     var rowValues = [];
-    for (var key in data["parties"]) {
-      var val = data["parties"][key];
+    for (var key in this.data["parties"]) {
+      var val = this.data["parties"][key];
       rowValues = rowValues.concat([
-        [val["Key"], val["Address"], val["GSTIN"], val["Party Name"]]
+        [val["Key"], val["Address"], val["GSTIN"], val["Party Name"]],
       ]);
     }
 
-    return rowValues.map(i => {
+    return rowValues.map((i) => {
       return (
-        <tr key={i}>
-          <th scope={"row"}>{i[0]}</th>
-          <td>{i[1]}</td>
-          <td>{i[2]}</td>
-          <td>{i[3]}</td>
+        <tr key={i[0]}>
+          <th scope="row">{i[0]}</th>
+          <td name="Address">
+            {this.state.clickedKey === i[0] &&
+            this.state.clickedField === "Address" ? (
+              <>
+                <input
+                  value={this.state.fieldValue}
+                  onChange={(e) =>
+                    this.setState({ fieldValue: e.target.value })
+                  }
+                />
+                <button
+                  className="btn btn-outline-success mx-md-2"
+                  style={{ fontSize: "1rem" }}
+                  onClick={this.modifyField}
+                >
+                  <FontAwesomeIcon icon={faCheck} />
+                </button>
+                <button
+                  className="btn btn-outline-danger mx-md-2"
+                  style={{ fontSize: "1rem" }}
+                  onClick={() => {
+                    this.setState({
+                      clickedKey: null,
+                      clickedField: "",
+                      fieldValue: "",
+                    });
+                  }}
+                >
+                  <FontAwesomeIcon icon={faTimes} />
+                </button>
+              </>
+            ) : (
+              <span
+                className="editable-text"
+                id={`${i[0]}-Address`}
+                onClick={() => {
+                  this.setState({
+                    clickedKey: i[0],
+                    clickedField: "Address",
+                    fieldValue: document.getElementById(`${i[0]}-Address`)
+                      .innerText,
+                  });
+                }}
+              >
+                {i[1]}
+              </span>
+            )}
+          </td>
+          <td name="GSTIN">
+            {this.state.clickedKey === i[0] &&
+            this.state.clickedField === "GSTIN" ? (
+              <>
+                <input
+                  value={this.state.fieldValue}
+                  onChange={(e) =>
+                    this.setState({ fieldValue: e.target.value })
+                  }
+                />
+                <button
+                  className="btn btn-outline-success mx-md-2"
+                  style={{ fontSize: "1rem" }}
+                  onClick={this.modifyField}
+                >
+                  <FontAwesomeIcon icon={faCheck} />
+                </button>
+                <button
+                  className="btn btn-outline-danger mx-md-2"
+                  style={{ fontSize: "1rem" }}
+                  onClick={() => {
+                    this.setState({
+                      clickedKey: null,
+                      clickedField: "",
+                      fieldValue: "",
+                    });
+                  }}
+                >
+                  <FontAwesomeIcon icon={faTimes} />
+                </button>
+              </>
+            ) : (
+              <span
+                className="editable-text"
+                id={`${i[0]}-GSTIN`}
+                onClick={() => {
+                  this.setState({
+                    clickedKey: i[0],
+                    clickedField: "GSTIN",
+                    fieldValue: document.getElementById(`${i[0]}-GSTIN`)
+                      .innerText,
+                  });
+                }}
+              >
+                {i[2]}
+              </span>
+            )}
+          </td>
+          <td name="Party Name">
+            {this.state.clickedKey === i[0] &&
+            this.state.clickedField === "Party Name" ? (
+              <>
+                <input
+                  value={this.state.fieldValue}
+                  onChange={(e) =>
+                    this.setState({ fieldValue: e.target.value })
+                  }
+                />
+                <button
+                  className="btn btn-outline-success mx-md-2"
+                  style={{ fontSize: "1rem" }}
+                  onClick={this.modifyField}
+                >
+                  <FontAwesomeIcon icon={faCheck} />
+                </button>
+                <button
+                  className="btn btn-outline-danger mx-md-2"
+                  style={{ fontSize: "1rem" }}
+                  onClick={() => {
+                    this.setState({
+                      clickedKey: null,
+                      clickedField: "",
+                      fieldValue: "",
+                    });
+                  }}
+                >
+                  <FontAwesomeIcon icon={faTimes} />
+                </button>
+              </>
+            ) : (
+              <span
+                className="editable-text"
+                id={`${i[0]}-Party Name`}
+                onClick={() => {
+                  this.setState({
+                    clickedKey: i[0],
+                    clickedField: "Party Name",
+                    fieldValue: document.getElementById(`${i[0]}-Party Name`)
+                      .innerText,
+                  });
+                }}
+              >
+                {i[3]}
+              </span>
+            )}
+          </td>
         </tr>
       );
     });
   };
 
-  handleChange = event => {
+  handleChange = (event) => {
     const { value, name } = event.target;
     this.setState({
-      [name]: value
+      [name]: value,
     });
   };
 
@@ -60,7 +227,7 @@ class ViewParty extends Component {
             style={{ width: "6%" }}
             value={this.state.key}
             name="key"
-            onChange={event => this.handleChange(event)}
+            onChange={(event) => this.handleChange(event)}
           />
           <input
             className="form-control mr-md-2 flex-shrink-1"
@@ -68,7 +235,7 @@ class ViewParty extends Component {
             value={this.state.partyAddress}
             placeholder={"Enter Party Address"}
             name="partyAddress"
-            onChange={event => this.handleChange(event)}
+            onChange={(event) => this.handleChange(event)}
           />
           <input
             className="form-control mx-md-2 flex-shrink-1"
@@ -76,7 +243,7 @@ class ViewParty extends Component {
             value={this.state.GSTIN}
             placeholder={"Enter Party GSTIN"}
             name="GSTIN"
-            onChange={event => this.handleChange(event)}
+            onChange={(event) => this.handleChange(event)}
           />
           <input
             className="form-control ml-md-2 flex-shrink-1"
@@ -84,7 +251,7 @@ class ViewParty extends Component {
             value={this.state.partyName}
             placeholder={"Enter Party Name"}
             name="partyName"
-            onChange={event => this.handleChange(event)}
+            onChange={(event) => this.handleChange(event)}
           />
           <button
             className="btn btn-outline-success mx-md-2"
@@ -92,6 +259,15 @@ class ViewParty extends Component {
             onClick={this.handleSubmit}
           >
             <FontAwesomeIcon icon={faCheck} />
+          </button>
+          <button
+            className="btn btn-outline-danger mx-md-2"
+            style={{ fontSize: "1rem" }}
+            onClick={() => {
+              this.setState({ isNewPartyClicked: false });
+            }}
+          >
+            <FontAwesomeIcon icon={faTimes} />
           </button>
         </div>
       );
@@ -135,7 +311,7 @@ class ViewParty extends Component {
       Key: key,
       Address: this.state.partyAddress,
       GSTIN: this.state.GSTIN,
-      "Party Name": partyName
+      "Party Name": partyName,
     };
     console.log(data);
     fs.writeFileSync(
@@ -148,7 +324,7 @@ class ViewParty extends Component {
       key: "",
       partyAddress: "",
       GSTIN: "",
-      partyName: ""
+      partyName: "",
     });
   };
 

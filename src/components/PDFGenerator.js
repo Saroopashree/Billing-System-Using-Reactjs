@@ -67,7 +67,11 @@ class PDFGenerator extends React.Component {
             {this.props.children}
           </div>
         </div>
-        <button style={{ display: "block" }} onClick={this.generatePDF}>
+        <button
+          className="form-control btn btn-outline-primary mt-md-3"
+          style={{ padding: "8px 20ox 8px 20px" }}
+          onClick={this.generatePDF}
+        >
           Print PDF
         </button>
       </div>
