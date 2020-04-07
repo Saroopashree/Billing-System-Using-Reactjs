@@ -36,6 +36,9 @@ class ViewParty extends Component {
       this.data["parties"][this.state.clickedKey][this.state.clickedField] =
         "-";
     }
+
+    this.setState({ clickedKey: null, clickedField: "", fieldValue: "" });
+
     fs.writeFileSync(
       path.join(__dirname + "/../assets/data.json"),
       JSON.stringify(this.data, null, 2)
@@ -62,9 +65,9 @@ class ViewParty extends Component {
               <>
                 <input
                   value={this.state.fieldValue}
-                  onChange={(e) =>
-                    this.setState({ fieldValue: e.target.value })
-                  }
+                  onChange={(e) => {
+                    this.setState({ fieldValue: e.target.value });
+                  }}
                 />
                 <button
                   className="btn btn-outline-success mx-md-2"
@@ -110,9 +113,9 @@ class ViewParty extends Component {
               <>
                 <input
                   value={this.state.fieldValue}
-                  onChange={(e) =>
-                    this.setState({ fieldValue: e.target.value })
-                  }
+                  onChange={(e) => {
+                    this.setState({ fieldValue: e.target.value });
+                  }}
                 />
                 <button
                   className="btn btn-outline-success mx-md-2"
@@ -158,9 +161,10 @@ class ViewParty extends Component {
               <>
                 <input
                   value={this.state.fieldValue}
-                  onChange={(e) =>
-                    this.setState({ fieldValue: e.target.value })
-                  }
+                  onChange={(e) => {
+                    this.setState({ fieldValue: e.target.value });
+                    console.log(e.target.value);
+                  }}
                 />
                 <button
                   className="btn btn-outline-success mx-md-2"
