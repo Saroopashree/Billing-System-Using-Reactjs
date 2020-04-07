@@ -71,14 +71,14 @@ class ViewParty extends Component {
                 />
                 <button
                   className="btn btn-outline-success mx-md-2"
-                  style={{ fontSize: "1rem" }}
+                  style={{ fontSize: "0.7rem" }}
                   onClick={this.modifyField}
                 >
                   <FontAwesomeIcon icon={faCheck} />
                 </button>
                 <button
                   className="btn btn-outline-danger mx-md-2"
-                  style={{ fontSize: "1rem" }}
+                  style={{ fontSize: "0.7rem" }}
                   onClick={() => {
                     this.setState({
                       clickedKey: null,
@@ -119,14 +119,14 @@ class ViewParty extends Component {
                 />
                 <button
                   className="btn btn-outline-success mx-md-2"
-                  style={{ fontSize: "1rem" }}
+                  style={{ fontSize: "0.7rem" }}
                   onClick={this.modifyField}
                 >
                   <FontAwesomeIcon icon={faCheck} />
                 </button>
                 <button
                   className="btn btn-outline-danger mx-md-2"
-                  style={{ fontSize: "1rem" }}
+                  style={{ fontSize: "0.7rem" }}
                   onClick={() => {
                     this.setState({
                       clickedKey: null,
@@ -168,14 +168,14 @@ class ViewParty extends Component {
                 />
                 <button
                   className="btn btn-outline-success mx-md-2"
-                  style={{ fontSize: "1rem" }}
+                  style={{ fontSize: "0.7rem" }}
                   onClick={this.modifyField}
                 >
                   <FontAwesomeIcon icon={faCheck} />
                 </button>
                 <button
                   className="btn btn-outline-danger mx-md-2"
-                  style={{ fontSize: "1rem" }}
+                  style={{ fontSize: "0.7rem" }}
                   onClick={() => {
                     this.setState({
                       clickedKey: null,
