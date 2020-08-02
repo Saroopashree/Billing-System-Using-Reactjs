@@ -1,13 +1,15 @@
 import React, { Component } from "react";
 import "./App.css";
-import { HashRouter } from "react-router-dom";
-import { Route } from "react-router";
+import { Switch, Route, Redirect, Router } from "react-router-dom";
+import { createBrowserHistory } from "history";
 
 import { checkboxState, textInputState, priceState } from "./utils/constants";
 
 import NewInvoice from "./components/newInvoice";
 import ViewParty from "./components/viewParty";
-import PreviewInvoice from "./components/previewInvoice";
+import PreviewInvoice from "./components/previewinvoice";
+
+const history = createBrowserHistory();
 
 class App extends Component {
   constructor() {
@@ -136,42 +138,44 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <HashRouter>
-          <Route
-            path="/"
-            exact
-            render={(props) => (
-              <NewInvoice
-                {...props}
-                states={this.state}
-                flush={this.flush}
-                handleKeyChange={this.handleKeyChange}
-                handleTextInputChange={this.handleTextInputChange}
-                handleCheckboxChange={this.handleCheckboxChange}
-              />
-            )}
-          />
-          <Route path="/viewParty" component={ViewParty} />
-          <Route
-            path="/previewInvoice"
-            render={(props) => (
-              <PreviewInvoice
-                {...props}
-                billNumber={this.state.textInputs.billNumber}
-                billDate={this.state.textInputs.billDate}
-                vehicleNumber={this.state.textInputs.vehicleNumber}
-                weight={this.state.textInputs.weight}
-                rate={this.state.textInputs.rate}
-                partyAddress={this.state.textInputs.partyAddress}
-                partyGSTIN={this.state.textInputs.partyGSTIN}
-                cgst={this.state.textInputs.cgst}
-                sgst={this.state.textInputs.sgst}
-                checkboxes={this.state.checkboxes}
-                price={this.state.price}
-              />
-            )}
-          />
-        </HashRouter>
+        <Router history={history}>
+          <Switch>
+            <Route path="/app/viewParty/" exact render={() => <ViewParty />} />
+            <Route
+              path="/app/previewInvoice/"
+              exact
+              render={() => (
+                <PreviewInvoice
+                  billNumber={this.state.textInputs.billNumber}
+                  billDate={this.state.textInputs.billDate}
+                  vehicleNumber={this.state.textInputs.vehicleNumber}
+                  weight={this.state.textInputs.weight}
+                  rate={this.state.textInputs.rate}
+                  partyAddress={this.state.textInputs.partyAddress}
+                  partyGSTIN={this.state.textInputs.partyGSTIN}
+                  cgst={this.state.textInputs.cgst}
+                  sgst={this.state.textInputs.sgst}
+                  checkboxes={this.state.checkboxes}
+                  price={this.state.price}
+                />
+              )}
+            />
+            <Route
+              path="/app/"
+              exact
+              render={() => (
+                <NewInvoice
+                  states={this.state}
+                  flush={this.flush}
+                  handleKeyChange={this.handleKeyChange}
+                  handleTextInputChange={this.handleTextInputChange}
+                  handleCheckboxChange={this.handleCheckboxChange}
+                />
+              )}
+            />
+            <Route path="/" render={() => <Redirect to="/app/" />} />
+          </Switch>
+        </Router>
       </div>
     );
   }

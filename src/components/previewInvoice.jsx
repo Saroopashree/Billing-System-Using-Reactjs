@@ -348,7 +348,7 @@ class PreviewInvoice extends Component {
           {/* </div> */}
         </div>
         <div className="m-5">
-          <Link style={{ fontSize: 20 }} to={"/"}>
+          <Link style={{ fontSize: 20 }} to="/app/">
             Back
           </Link>
         </div>

@@ -1,5 +1,5 @@
 {
-  "name": "billing-system",
+  "name": "invoice-generator",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -7,11 +7,9 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.25",
     "@fortawesome/free-solid-svg-icons": "^5.11.2",
     "@fortawesome/react-fontawesome": "^0.1.7",
-    "@progress/kendo-drawing": "^1.6.0",
-    "@progress/kendo-react-pdf": "^3.9.0",
     "babel-standalone": "^6.26.0",
     "bootstrap": "^4.3.1",
-    "concurrently": "^5.0.0",
+    "concurrently": "^5.2.0",
     "convert-rupees-into-words": "^1.0.6",
     "electron": "^7.1.2",
     "electron-builder": "^21.2.0",
@@ -21,8 +19,9 @@
     "react": "^16.12.0",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-dom": "^16.12.0",
+    "react-jss": "^10.3.0",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "^3.3.0",
+    "react-scripts": "^3.4.1",
     "wait-on": "^3.3.0"
   },
   "scripts": {

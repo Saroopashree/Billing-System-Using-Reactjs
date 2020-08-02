@@ -222,14 +222,14 @@ class ViewParty extends Component {
     } else {
       var data = require("../assets/data.json");
       const nextKey = Object.keys(data["parties"]).length + 1;
-      this.state.key = nextKey;
+
       return (
         <div className="d-flex flex-row">
           <input
             type="number"
             className="form-control mr-md-2 flex-shrink-1"
             style={{ width: "6%" }}
-            value={this.state.key}
+            value={nextKey}
             name="key"
             onChange={(event) => this.handleChange(event)}
           />
@@ -260,7 +260,7 @@ class ViewParty extends Component {
           <button
             className="btn btn-outline-success mx-md-2"
             style={{ fontSize: "1rem" }}
-            onClick={this.handleSubmit}
+            onClick={() => this.handleSubmit(nextKey)}
           >
             <FontAwesomeIcon icon={faCheck} />
           </button>
@@ -300,11 +300,11 @@ class ViewParty extends Component {
     this.setState({ isNewPartyClicked: true });
   };
 
-  handleSubmit = () => {
+  handleSubmit = (nextKey) => {
     const fs = require("fs");
     const path = require("path");
     console.log(__dirname);
-    let key = this.state.key.toString();
+    let key = nextKey.toString();
     let partyName = this.state.partyName === "" ? "-" : this.state.partyName;
 
     var data = JSON.parse(

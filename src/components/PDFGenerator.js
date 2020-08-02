@@ -10,9 +10,9 @@ function exportPDF(elementId, fileName) {
   };
   var html = document.getElementById(elementId);
 
-  console.log(html);
-
   var pdf = new jsPDF("p", "mm", "a4");
+  var pageWidth = pdf.internal.pageSize.getWidth();
+  var pageHeight = pdf.internal.pageSize.getHeight();
   const pixelHeight = Math.ceil(dpi * a4.height);
   const totalPages = Math.ceil(html.clientHeight / pixelHeight);
 
@@ -24,15 +24,25 @@ function exportPDF(elementId, fileName) {
       y: pageCount * pixelHeight,
       height: pixelHeight,
     }).then((canvas) => {
-      addPage(canvas, pdf, pageCount, totalPages);
+      const widthRatio = pageWidth / canvas.width;
+      const heightRatio = pageHeight / canvas.height;
+      const ratio = widthRatio > heightRatio ? heightRatio : widthRatio;
+
+      const canvasWidth = canvas.width * ratio;
+      const canvasHeight = canvas.height * ratio;
+
+      const marginX = (pageWidth - canvasWidth) / 2;
+      const marginY = (pageHeight - canvasHeight) / 2;
+
+      addPage(canvas, pdf, pageCount, totalPages, marginX, marginY);
       if (pageCount === totalPages - 1) pdf.save(fileName);
     });
   }
 }
 
-function addPage(canvas, pdf, pageCount, totalPages) {
+function addPage(canvas, pdf, pageCount, totalPages, marginX, marginY) {
   const image = canvas.toDataURL("image/jpeg", 1);
-  pdf.addImage(image, "JPEG", 0, 0);
+  pdf.addImage(image, "JPEG", marginX, marginY);
 
   if (pageCount < totalPages - 1) {
     pdf.addPage();
@@ -68,7 +78,7 @@ class PDFGenerator extends React.Component {
           </div>
         </div>
         <button
-          className="form-control btn btn-outline-primary mt-md-3"
+          className="form-control btn btn-primary mt-1 md-3"
           style={{ padding: "8px 20ox 8px 20px" }}
           onClick={this.generatePDF}
         >

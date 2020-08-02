@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
 
 class Header extends Component {
@@ -22,7 +22,7 @@ class Header extends Component {
           <div className="collapse navbar-collapse" id="navbarColor02">
             <ul className="navbar-nav">
               <li className={newInvoice}>
-                <Link className="nav-link" to={"/"}>
+                <Link className="nav-link" to="/app/">
                   New Invoice <span className="sr-only">(current)</span>
                 </Link>
               </li>
@@ -32,7 +32,7 @@ class Header extends Component {
                 </a>
               </li> */}
               <li className={viewParty}>
-                <Link className="nav-link" to={"/viewParty"}>
+                <Link className="nav-link" to="/app/viewParty/">
                   Parties registered
                 </Link>
               </li>
