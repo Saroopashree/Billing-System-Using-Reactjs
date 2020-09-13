@@ -11,7 +11,7 @@ const useStyles = createUseStyles({
   root: { padding: "15px", paddingTop: 0 },
   invoice: {
     margin: "15px",
-    width: "600px",
+    width: "765px",
     border: "0.5px solid #000",
     fontSize: "15px",
     "& .grid": {
@@ -20,7 +20,7 @@ const useStyles = createUseStyles({
       gridAutoRows: "20px",
       "& .grid-item": {
         border: "0.5px solid #000",
-        padding: "8px",
+        padding: "3px",
         "& .inline-block": {
           display: "inline-block",
         },
@@ -30,6 +30,9 @@ const useStyles = createUseStyles({
           height: "100%",
           width: "100%",
           "& .atom": { margin: "auto" },
+          "& .flex-item": {
+            flex: 1,
+          },
         },
         "& .block": { display: "block" },
         "& .flex-col": { flexDirection: "column" },
@@ -58,7 +61,7 @@ const useStyles = createUseStyles({
         gridRow: "3/6",
         gridColumn: "11/17",
         fontWeight: 600,
-        fontSize: "16px",
+        fontSize: "18px",
       },
       "& .to-name": {
         gridRow: "6/10",
@@ -84,23 +87,19 @@ const useStyles = createUseStyles({
         gridColumn: "11/17",
       },
       "& .consignee-gstin": {
-        gridRow: "10/13",
+        gridRow: "10/12",
         gridColumn: "1/11",
       },
       "& .documents-through": {
-        gridRow: "10/13",
+        gridRow: "10/12",
         gridColumn: "11/17",
-      },
-      "& .empty-space": {
-        gridRow: "1/3",
-        gridColumn: "1/8",
       },
       "& .amnt-before-tax": {
         gridRow: "1/3",
         gridColumn: "8/17",
       },
       "& .amount-words": {
-        gridRow: "3/11",
+        gridRow: "1/11",
         gridColumn: "1/8",
         fontSize: "20px",
         fontWeight: 600,
@@ -123,7 +122,7 @@ const useStyles = createUseStyles({
         gridColumn: "8/17",
       },
       "& .signature": {
-        gridRow: "11/16",
+        gridRow: "11/15",
         gridColumn: "1/17",
         fontSize: "17px",
         "& .stick-right": {
@@ -136,18 +135,22 @@ const useStyles = createUseStyles({
       },
     },
     "& .table-container": {
-      border: "0.5px solid #000",
+      // border: "0.5px solid #000",
       fontSize: "12px",
       "& .table": {
         width: "100%",
         marginBottom: 0,
         "& .table-cell": {
           padding: "5px",
+          border: "0.5px solid #000",
         },
-        "& .align-right": {
-          textAlign: "right",
+        "& .align-center": {
+          textAlign: "center",
         },
       },
+    },
+    "& .align-right": {
+      textAlign: "right",
     },
   },
 });
@@ -289,55 +292,58 @@ function PreviewInvoice(props) {
         <table className="table table-bordered">
           <thead className="thead-dark">
             <tr>
-              <th className="table-cell">Sl.No</th>
-              <th className="table-cell">Description</th>
-              <th className="table-cell">HSN Code</th>
-              <th className="table-cell">Weight</th>
-              <th className="table-cell">Rate</th>
-              <th className="table-cell">Amount Rs.</th>
+              <th className="table-cell align-center">Sl.No</th>
+              <th className="table-cell align-center">Description</th>
+              <th className="table-cell align-center">HSN Code</th>
+              <th className="table-cell align-center">Weight (kg/pc)</th>
+              <th className="table-cell align-center">Rate (₹)</th>
+              <th className="table-cell align-center">Amount (₹)</th>
             </tr>
           </thead>
           <tbody>{buildRows()}</tbody>
         </table>
       </div>
       <div className="grid">
-        <div className="grid-item empty-space" />
+        <div className="grid-item amount-words">
+          <div className="flex-box">
+            <span>{numbersToWords(priceWithTax) + " Only"}</span>
+          </div>
+        </div>
         <div className="grid-item amnt-before-tax">
           <div className="flex-box justify-between">
             <span>Total Amount Before Tax:</span>
             <span>{priceWithoutTax.toFixed(2)}</span>
           </div>
         </div>
-        <div className="grid-item amount-words">
-          <div className="flex-box">
-            <span>{numbersToWords(priceWithTax) + " Only"}</span>
-          </div>
-        </div>
         <div className="grid-item cgst">
           <div className="flex-box justify-between">
-            <span>Add CSGT</span>
-            <span>{cgst} %</span>
-            <span>{calculatedCgst.toFixed(2)}</span>
+            <span className="flex-item">Add CSGT</span>
+            <span className="flex-item align-right">{cgst} %</span>
+            <span className="flex-item align-right">
+              {calculatedCgst.toFixed(2)}
+            </span>
           </div>
         </div>
         <div className="grid-item sgst">
           <div className="flex-box justify-between">
-            <span>Add SSGT</span>
-            <span>{sgst} %</span>
-            <span>{calculatedSgst.toFixed(2)}</span>
+            <span className="flex-item">Add SSGT</span>
+            <span className="flex-item align-right">{sgst} %</span>
+            <span className="flex-item align-right">
+              {calculatedSgst.toFixed(2)}
+            </span>
           </div>
         </div>
         <div className="grid-item igst">
           <div className="flex-box justify-between">
-            <span>Add ISGT</span>
-            <span>0 %</span>
-            <span>0</span>
+            <span className="flex-item">Add ISGT</span>
+            <span className="flex-item align-right">0 %</span>
+            <span className="flex-item align-right">0</span>
           </div>
         </div>
         <div className="grid-item amount-after-tax">
           <div className="flex-box justify-between">
             <span>Total Amount After Tax: </span>
-            <span>{priceWithTax.toFixed(0)}</span>
+            <span>₹ {priceWithTax.toFixed(0)}</span>
           </div>
         </div>
         <div className="grid-item signature">

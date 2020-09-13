@@ -32,7 +32,8 @@ function exportPDF(elementId, fileName) {
       const canvasHeight = canvas.height * ratio;
 
       const marginX = (pageWidth - canvasWidth) / 2;
-      const marginY = (pageHeight - canvasHeight) / 2;
+      // const marginY = (pageHeight - canvasHeight) / 2;
+      const marginY = 0;
 
       addPage(canvas, pdf, pageCount, totalPages, marginX, marginY);
       if (pageCount === totalPages - 1) pdf.save(fileName);
